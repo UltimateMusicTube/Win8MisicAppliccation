@@ -17,15 +17,13 @@
 <body>
     <!-- This template is used to display each item in the ListView declared
          below. -->
-    <div class="itemtemplate" data-win-control="WinJS.Binding.Template">
-        <div class="item">
-            <img class="item-image" src="#" data-win-bind="src: backgroundImage; alt: title" />
-            <div class="item-content">
-                <h3 class="item-title win-type-x-small win-type-ellipsis" data-win-bind="innerHTML: title searchresults.markText"></h3>
-                <h4 class="item-subtitle win-type-x-small win-type-ellipsis" data-win-bind="innerHTML: subtitle searchresults.markText"></h4>
-                <h4 class="item-description win-type-x-small win-type-ellipsis" data-win-bind="innerHTML: description searchresults.markText"></h4>
-            </div>
-        </div>
+    <div id="search-result-template" data-win-control="WinJS.Binding.Template">           
+        <img class="search-result-list-image" src="#"
+             data-win-bind="src: thumbnailImgUrl"/>
+        <div class="search-result-list-title-holder">
+            <span class="search-result-list-title"
+                data-win-bind="innerText: title"></span>
+        </div>            
     </div>
 
     <!-- The content that will be loaded and displayed. -->
@@ -37,13 +35,15 @@
                 <h2 class="pagesubtitle win-type-ellipsis"></h2>
             </div>
         </header>
+
         <section aria-label="Main content" role="main">
-            <div class="resultsmessage win-type-x-large">No results match your search.</div>
-            <div class="filterarea">
-                <ul class="filterbar"></ul>
-                <select class="filterselect"></select>
+            <div data-win-control="WinJS.UI.ListView"
+                data-win-options="{
+                    itemDataSource: ViewModels.searchResults.dataSource,
+                    itemTemplate: select('#search-result-template'),
+                    selectionMode: 'none'
+                    }">
             </div>
-            <div class="resultslist win-selectionstylefilled" aria-label="Search results" data-win-control="WinJS.UI.ListView" data-win-options="{ selectionMode: 'none' }"></div>
         </section>
     </div>
 </body>

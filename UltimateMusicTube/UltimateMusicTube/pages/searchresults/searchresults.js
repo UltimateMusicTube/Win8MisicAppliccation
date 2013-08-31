@@ -21,9 +21,63 @@
     var ui = WinJS.UI;
     var utils = WinJS.Utilities;
     var searchPageURI = "/pages/searchresults/searchresults.html";
+    var searchPane = appModel.Search.SearchPane.getForCurrentView();
+
+    searchPane.placeholderText = "Search in YouTube";
+    searchPane.showOnKeyboardInput = true;
 
     ui.Pages.define(searchPageURI, {
-        
+        ready: function (element, options) {
+
+            var submitSearchResults = (function () {
+
+                var searchResultsDisplayCount = 5;
+                var searchInput = options.queryText;
+                var searchWords = searchInput.split(" ");
+                searchWords = searchWords.filter(function (n) { return n });
+
+                var searchUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=";
+                for (var i = 0; i < searchWords.length; i++) {
+                    searchUrl += searchWords[i].trim() + "+";
+                }
+                searchUrl.substring(0, searchUrl.length - 2);
+                searchUrl += "&category=music&type=video&key=AIzaSyC9M5McfrlS7DmKaldR8Xr0DaqNUPGTh9k";
+
+                WinJS.xhr({
+                    url: searchUrl,
+                    responseType: "json"
+                }).then(function (result) {
+                    var sourceUrl = "https://www.youtube.com/embed/";
+                    var responseJson = JSON.parse(result.responseText);
+
+                    for (var i = 0; i < searchResultsDisplayCount; i++) {
+
+
+                        //getting the sourceUrl of the video
+                        var videoId = responseJson.items[i].id.videoId;
+                        sourceUrl += videoId;
+
+                        //getting the title of the video
+                        var videoTitle = JSON.stringify(responseJson.items[i].snippet.title);
+
+                        //getting the thumbnailImgUrl of the video
+                        var thumbnailImgUrl = responseJson.items[i].snippet.thumbnails.medium.url;
+
+                        //adding the search result
+                        ViewModels.addSearchResult(videoTitle, thumbnailImgUrl, sourceUrl);
+                    }
+                    ViewModels.loadSearchResults();
+                    Data.clearSearchResultsModels();
+                });
+
+
+            }());
+
+            //WinJS.Utilities.markSupportedForProcessing(submitSearchResults);
+
+            //WinJS.Binding.processAll(element, ViewModels);
+            ViewModels.submitSearchText(submitSearchResults);
+        }
     });
 
     WinJS.Application.addEventListener("activated", function (args) {
@@ -38,5 +92,5 @@
         }
     });
 
-    appModel.Search.SearchPane.getForCurrentView().onquerysubmitted = function (args) { nav.navigate(searchPageURI, args); };
+    searchPane.onquerysubmitted = function (args) { nav.navigate(searchPageURI, args); };
 })();
