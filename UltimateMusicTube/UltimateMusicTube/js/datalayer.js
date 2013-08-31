@@ -1,6 +1,6 @@
 ﻿(function () {
-
     var searchResultModels = [];
+    var playlistModels = [];
 
     var clearSearchResultsModels = function () {
         searchResultModels = [];
@@ -10,13 +10,23 @@
         return searchResultModels;
     }
 
+    var getPlaylistResults = function () {
+        return playlistModels;
+    }
+
     var addSearchResult = function (searchResultModel) {
         searchResultModels.push(searchResultModel);
+    }
+
+    var addToPlaylist = function (playlistModel) {
+        playlistModels.push(playlistModel);
     }
 
     WinJS.Namespace.define("Data", {
         getSearchResults: getSearchResults,
         addSearchResult: addSearchResult,
-        clearSearchResultsModels: clearSearchResultsModels
+        clearSearchResultsModels: clearSearchResultsModels,
+        getPlaylistResults: getPlaylistResults,
+        addToPlaylist: addToPlaylist,
     });
 })()

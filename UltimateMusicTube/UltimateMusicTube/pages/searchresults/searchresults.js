@@ -70,7 +70,6 @@
                     Data.clearSearchResultsModels();
                 });
 
-
             }());
 
             //WinJS.Utilities.markSupportedForProcessing(submitSearchResults);
