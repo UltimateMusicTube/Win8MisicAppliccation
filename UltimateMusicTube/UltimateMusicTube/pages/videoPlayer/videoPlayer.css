@@ -16,3 +16,44 @@
         margin-right: 100px;
     }
 }
+
+
+body{
+margin:0;
+padding:0;
+line-height: 1.5em;
+}
+
+b{font-size: 110%;}
+em{color: red;}
+
+section{
+float: left;
+width: 100%;
+}
+
+#contentcolumn{
+margin-right: 25%;
+}
+
+#lyrics{
+    float: right;
+    margin-top: -390px;
+    width: 30%;
+    height: 400px;
+    background: #2f4f4f;
+    padding: 5px;
+    border: 1px solid white;
+    border-radius: 15px;
+    overflow: scroll;  
+}
+
+#more-info{
+float: right;
+width: 30%;
+background: #FDE95E;
+}
+
+.youtube-player{
+margin: 0 auto;
+}
