@@ -7,24 +7,29 @@
         // This function is called whenever a user navigates to this page. It
         // populates the page elements with the app's data.
         ready: function (element, options) {
-            var player = document.getElementById("player");
-            var arr = Data.getSearchResults();
+            if (options.indexInComputersList != undefined) {
 
-            //if (options.indexInMultyVideos.length >= 1) {
-            if (options.indexInComputersList == undefined) {
-                for (var i = 0; i < options.indexInMultyVideos.length; i++) {
-                    ViewModels.addToPlaylist(arr[options.indexInMultyVideos[i]].title, arr[options.indexInMultyVideos[i]].thumbnailImgUrl, arr[options.indexInMultyVideos[i]].sourceUrl);
-                    ViewModels.loadPlaylist();
-                }
-                
-                player.src = arr[options.indexInMultyVideos[0]].sourceUrl;
-            } else {
+
+                var player = document.getElementById("player");
+                var arr = Data.getSearchResults();
+
+                //if (options.indexInMultyVideos.length >= 1) {
+                //if (options.indexInComputersList == undefined) {
+                //    for (var i = 0; i < options.indexInMultyVideos.length; i++) {
+                //        ViewModels.addToPlaylist(arr[options.indexInMultyVideos[i]].title, arr[options.indexInMultyVideos[i]].thumbnailImgUrl, arr[options.indexInMultyVideos[i]].sourceUrl);
+                //        ViewModels.loadPlaylist();
+                //    }
+
+                //    player.src = arr[options.indexInMultyVideos[0]].sourceUrl;
+                //} else {
                 ViewModels.addToPlaylist(arr[options.indexInComputersList].title, arr[options.indexInComputersList].thumbnailImgUrl, arr[options.indexInComputersList].sourceUrl);
                 ViewModels.loadPlaylist();
+                Lyrics.getSongLyrics(arr[options.indexInComputersList].title);
                 player.src = arr[options.indexInComputersList].sourceUrl;
 
+                //}
+                //}
             }
-            //}
            
             //ViewModels.addToPlaylist(arr[options.indexInComputersList].title, arr[options.indexInComputersList].thumbnailImgUrl, arr[options.indexInComputersList].sourceUrl);
             //ViewModels.loadPlaylist();

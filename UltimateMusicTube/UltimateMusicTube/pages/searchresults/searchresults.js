@@ -68,8 +68,8 @@
                 });
 
                 WinJS.Utilities.id("cmd-add-selected").listen("click", function () {
+                    Commands.getSelection();
                     WinJS.Navigation.navigate("/pages/videoPlayer/videoPlayer.html", {
-                        indexInMultyVideos: Commands.multyVideos,
                     });
 
 
