@@ -12,8 +12,6 @@
         }
     }
 
-
-
     var searchResultsList = new WinJS.Binding.List([]);
 
     var loadSearchResults = function () {
@@ -32,14 +30,6 @@
         searchQuery.queryText = text;
         searchResultsList.notifyReload();
     }
-
-    var SearchVideos = searchResultsList.createFiltered(function (item) {
-        var queryIndexInItemString =
-            JSON.stringify(item).indexOf(searchQuery.queryText);
-
-        var isSelected = queryIndexInItemString > -1;
-        return isSelected;
-    });
 
     WinJS.Namespace.define("ViewModels", {
         loadSearchResults: loadSearchResults,

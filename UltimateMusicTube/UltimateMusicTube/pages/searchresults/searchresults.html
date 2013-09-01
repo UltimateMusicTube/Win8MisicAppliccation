@@ -38,10 +38,11 @@
 
         <section aria-label="Main content" role="main">
             <div id="search-results-list" data-win-control="WinJS.UI.ListView"
-                data-win-options="{
-                    itemDataSource: ViewModels.searchResults.dataSource,
-                    itemTemplate: select('#search-result-template'),
-                    oniteminvoked: Commands.addAndPlay
+                 data-win-options="{
+                        itemDataSource: ViewModels.searchResults.dataSource,
+                        itemTemplate: select('#search-result-template'),
+                        oniteminvoked: Commands.addAndPlay,
+                        onselectionchanged: Commands.addToMultyVideos
                     }">
             </div>
         </section>

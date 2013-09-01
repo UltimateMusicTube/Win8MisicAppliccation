@@ -9,9 +9,26 @@
         ready: function (element, options) {
             var player = document.getElementById("player");
             var arr = Data.getSearchResults();
-            ViewModels.addToPlaylist(arr[options.indexInComputersList].title, arr[options.indexInComputersList].thumbnailImgUrl, arr[options.indexInComputersList].sourceUrl);
-            ViewModels.loadPlaylist();
-            player.src = arr[options.indexInComputersList].sourceUrl;
+
+            //if (options.indexInMultyVideos.length >= 1) {
+            if (options.indexInComputersList == undefined) {
+                for (var i = 0; i < options.indexInMultyVideos.length; i++) {
+                    ViewModels.addToPlaylist(arr[options.indexInMultyVideos[i]].title, arr[options.indexInMultyVideos[i]].thumbnailImgUrl, arr[options.indexInMultyVideos[i]].sourceUrl);
+                    ViewModels.loadPlaylist();
+                }
+                
+                player.src = arr[options.indexInMultyVideos[0]].sourceUrl;
+            } else {
+                ViewModels.addToPlaylist(arr[options.indexInComputersList].title, arr[options.indexInComputersList].thumbnailImgUrl, arr[options.indexInComputersList].sourceUrl);
+                ViewModels.loadPlaylist();
+                player.src = arr[options.indexInComputersList].sourceUrl;
+
+            }
+            //}
+           
+            //ViewModels.addToPlaylist(arr[options.indexInComputersList].title, arr[options.indexInComputersList].thumbnailImgUrl, arr[options.indexInComputersList].sourceUrl);
+            //ViewModels.loadPlaylist();
+            //player.src = arr[options.indexInComputersList].sourceUrl;
         },
 
         unload: function () {

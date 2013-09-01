@@ -28,7 +28,6 @@
 
     ui.Pages.define(searchPageURI, {
         ready: function (element, options) {
-
             var submitSearchResults = (function () {
                 Data.clearSearchResultsModels();
                 var searchResultsDisplayCount = 5;
@@ -68,6 +67,18 @@
                     ViewModels.loadSearchResults();                   
                 });
 
+                WinJS.Utilities.id("cmd-add-selected").listen("click", function () {
+                    WinJS.Navigation.navigate("/pages/videoPlayer/videoPlayer.html", {
+                        indexInMultyVideos: Commands.multyVideos,
+                    });
+
+
+                    //for (var i = 0; i < options.addMultyVideos.length; i++) {
+                    //    ViewModels.addToPlaylist(arr[options.addMultyVideos[i]].title, arr[options.addMultyVideos[i]].thumbnailImgUrl, arr[options.addMultyVideos[i]].sourceUrl);
+                    //    ViewModels.loadPlaylist();
+                    //}
+                    //player.src = arr[options.addMultyVideos[0]].sourceUrl;
+                });
             }());
 
             //WinJS.Utilities.markSupportedForProcessing(submitSearchResults);
