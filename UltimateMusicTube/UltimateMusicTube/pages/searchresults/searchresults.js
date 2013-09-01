@@ -53,10 +53,10 @@
 
                         //getting the sourceUrl of the video
                         var videoId = responseJson.items[i].id.videoId;
-                        sourceUrl += videoId;
+                        sourceUrl += videoId + "?autoplay=1";
 
                         //getting the title of the video
-                        var videoTitle = JSON.stringify(responseJson.items[i].snippet.title);
+                        var videoTitle = responseJson.items[i].snippet.title;
 
                         //getting the thumbnailImgUrl of the video
                         var thumbnailImgUrl = responseJson.items[i].snippet.thumbnails.medium.url;

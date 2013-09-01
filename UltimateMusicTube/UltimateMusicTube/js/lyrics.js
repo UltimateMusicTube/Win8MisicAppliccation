@@ -2,7 +2,7 @@
 
     var getSongLyrics = function (songTitle) {
 
-        songTitle.replace(/ *\([^)]*\) */g, "");
+        songTitle = songTitle.replace(/ *\([^)]*\) */g, "");
         var dashIndex = songTitle.indexOf('-');
         var artist = "";
         var song= "";
@@ -12,13 +12,13 @@
         }
         else{
 
-            song = sogTitle;
+            song = songTitle;
         }
 
         var lyricsContainer = document.getElementById("lyrics");
         var songLyrics = "";
         var mainUrl = "http://api.chartlyrics.com/apiv1.asmx/SearchLyricDirect?";
-
+        
         WinJS.xhr({
             url: mainUrl + "artist=" + artist + "&song=" + song,
             responseType: "document"
@@ -43,6 +43,7 @@
         }, function (error) {
             lyricsContainer.innerText = "Lyrics not found";
         });
+        
     };   
 
     WinJS.Namespace.define("Lyrics", {

@@ -23,11 +23,16 @@
         playlistModels.push(playlistModel);
     }
 
+    var deleteFromPlaylist = function (itemIndex) {
+        playlistModels.splice(itemIndex, 1);
+    }
+
     WinJS.Namespace.define("Data", {        
         getSearchResults: getSearchResults,
         addSearchResult: addSearchResult,
         clearSearchResultsModels: clearSearchResultsModels,
         getPlaylistResults: getPlaylistResults,
         addToPlaylist: addToPlaylist,
+        deleteFromPlaylist: deleteFromPlaylist
     });
 })()

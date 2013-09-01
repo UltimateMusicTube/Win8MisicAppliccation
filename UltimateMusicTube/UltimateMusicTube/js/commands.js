@@ -1,17 +1,9 @@
 ﻿(function () {
-   // var multyVideos = [];
 
     var addAndPlay = function(invokeEvent) {
         WinJS.Navigation.navigate("/pages/videoPlayer/videoPlayer.html", {
             indexInComputersList: invokeEvent.detail.itemIndex,
         })
-
-        //event.detail.itemPromise.then(function (item) {
-        //    console.log(JSON.stringify(item.data));
-        //});
-
-        //console.log("Invoked Item Index");
-        //console.log(event.detail.itemIndex);
     };
 
     var getSelection = function () {
@@ -29,40 +21,19 @@
         });
     };
 
-    //var addToMultyVideos = function (event) {
-    //    //multyVideos = [];
-    //    var triggeringListView = this.winControl;
-    //    triggeringListView.selection.getItems();
-    //    itemIndices = triggeringListView.selection.getIndices();
-
-
-    //    for (var i = 0; i < itemIndices.length; i++) {
-    //        multyVideos[i] = itemIndices[i];
-    //    }     
-    //};
-
-    //var addMultyVideos = function (event) {
-    //    WinJS.Navigation.navigate("/pages/videoPlayer/videoPlayer.html", {
-    //        indexInMultyVideos: multyVideos,
-    //    });
-    //};
-    //event.detail.itemPromise.then(function (item) {
-        //    console.log(JSON.stringify(item.data));
-        //});
-
-        //console.log("Invoked Item Index");
-        //console.log(event.detail.itemIndex);
-    //};
-
+    var playFromPlaylist = function (eventInfo) {
+        var player = document.getElementById("player");
+        var data = Data.getPlaylistResults();
+        var url = data[eventInfo.detail.itemIndex].sourceUrl;
+        player.src = url;
+    }
 
     WinJS.Utilities.markSupportedForProcessing(addAndPlay);
-   // WinJS.Utilities.markSupportedForProcessing(addToMultyVideos);
+    WinJS.Utilities.markSupportedForProcessing(playFromPlaylist);
 
     WinJS.Namespace.define("Commands", {
         addAndPlay: addAndPlay,
-        getSelection: getSelection
-      //  addToMultyVideos: addToMultyVideos,
-      //  multyVideos: multyVideos
-        //addMultyVideos: addMultyVideos,
+        getSelection: getSelection,
+        playFromPlaylist: playFromPlaylist
     });
 })()
