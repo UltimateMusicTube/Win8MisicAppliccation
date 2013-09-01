@@ -30,7 +30,7 @@
         ready: function (element, options) {
 
             var submitSearchResults = (function () {
-
+                Data.clearSearchResultsModels();
                 var searchResultsDisplayCount = 5;
                 var searchInput = options.queryText;
                 var searchWords = searchInput.split(" ");
@@ -46,12 +46,11 @@
                 WinJS.xhr({
                     url: searchUrl,
                     responseType: "json"
-                }).then(function (result) {
-                    var sourceUrl = "https://www.youtube.com/embed/";
+                }).then(function (result) {                   
                     var responseJson = JSON.parse(result.responseText);
 
                     for (var i = 0; i < searchResultsDisplayCount; i++) {
-
+                        var sourceUrl = "https://www.youtube.com/embed/";
 
                         //getting the sourceUrl of the video
                         var videoId = responseJson.items[i].id.videoId;
@@ -66,8 +65,7 @@
                         //adding the search result
                         ViewModels.addSearchResult(videoTitle, thumbnailImgUrl, sourceUrl);
                     }
-                    ViewModels.loadSearchResults();
-                    Data.clearSearchResultsModels();
+                    ViewModels.loadSearchResults();                   
                 });
 
             }());

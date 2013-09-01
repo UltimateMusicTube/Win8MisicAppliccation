@@ -37,14 +37,29 @@
         </header>
 
         <section aria-label="Main content" role="main">
-            <div data-win-control="WinJS.UI.ListView"
+            <div id="search-results-list" data-win-control="WinJS.UI.ListView"
                 data-win-options="{
                     itemDataSource: ViewModels.searchResults.dataSource,
                     itemTemplate: select('#search-result-template'),
-                    selectionMode: 'none'
+                    oniteminvoked: Commands.addAndPlay
                     }">
             </div>
         </section>
+    </div>
+
+    <!--appbar control-->
+    <div id="appbar" data-win-control="WinJS.UI.AppBar" data-win-options="">
+        <button
+            data-win-control="WinJS.UI.AppBarCommand"
+            data-win-options="{id:'cmd-add-selected',label:'Add Selected to Playlist',icon:'add',
+                section:'selection',tooltip:'Add Selected to Playlist'}">
+        </button>
+        <button
+            data-win-control="WinJS.UI.AppBarCommand"
+            data-win-options="{id:'cmd-view-playlist',label:'View Plalist',icon:'list',
+                section:'global',tooltip:'View Plalist'}">
+        </button>
+
     </div>
 </body>
 </html>

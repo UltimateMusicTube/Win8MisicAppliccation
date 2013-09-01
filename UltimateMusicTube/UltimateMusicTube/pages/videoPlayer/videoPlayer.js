@@ -7,7 +7,11 @@
         // This function is called whenever a user navigates to this page. It
         // populates the page elements with the app's data.
         ready: function (element, options) {
-            // TODO: Initialize the page here.
+            var player = document.getElementById("player");
+            var arr = Data.getSearchResults();
+            ViewModels.addToPlaylist(arr[options.indexInComputersList].title, arr[options.indexInComputersList].thumbnailImgUrl, arr[options.indexInComputersList].sourceUrl);
+            ViewModels.loadPlaylist();
+            player.src = arr[options.indexInComputersList].sourceUrl;
         },
 
         unload: function () {

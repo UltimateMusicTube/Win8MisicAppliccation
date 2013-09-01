@@ -13,24 +13,7 @@
     <script src="videoPlayer.js"></script>
 </head>
     <body>
-        <!-- This template is used to display each item in the ListView declared below. -->
-        <div id="playlist-result-template" data-win-control="WinJS.Binding.Template">           
-            <img class="video-result-list-image" src="#" width="150" height="100"
-                 data-win-bind="src: thumbnailImgUrl"/>
-            <div class="video-result-list-title-holder">
-                <span class="video-result-list-title"
-                    data-win-bind="innerText: title"></span>
-            </div>            
-        </div>
         
-        <div data-win-control="WinJS.UI.ListView"
-            data-win-options="{
-                itemDataSource: ViewModels.searchResults.dataSource,
-                itemTemplate: select('#playlist-result-template'),
-                selectionMode: 'none'
-                }">
-        </div>
-
         <div class="videoPlayer fragment">
             <header aria-label="Header content" role="banner">
                 <button class="win-backbutton" aria-label="Back" disabled type="button"></button>
@@ -42,17 +25,38 @@
                 <iframe id="player" class="youtube-player" 
                         type="text/html" width="640" height="385" src="#" frameborder="0">          
                 </iframe>
-        
+
+                
                 <div id="lyrics"></div>
                 <div id="more-info"></div>
-                <div id="playlist"></div>
+                <div id="playlist">
+                    
+                    <!-- This template is used to display each item in the ListView declared below. -->
+                    <div id="playlist-result-template" data-win-control="WinJS.Binding.Template">           
+                        <img class="video-result-list-image" src="#" width="100" height="70"
+                             data-win-bind="src: thumbnailImgUrl"/>
+                        <div class="video-result-list-title-holder">
+                            <span class="video-result-list-title"
+                                data-win-bind="innerText: title"></span>
+                        </div>            
+                    </div>
+        
+                    <div data-win-control="WinJS.UI.ListView"
+                        data-win-options="{
+                            itemDataSource: ViewModels.playlist.dataSource,
+                            itemTemplate: select('#playlist-result-template'),
+                            selectionMode: 'none'
+                            }">
+                    </div>
+
+                </div>
         
                 <div id="appbar-id" data-win-control="WinJS.UI.AppBar" data-win-options="">          
                     <button 
                         id="save-playlist-button" 
                         data-win-control="WinJS.UI.AppBarCommand" 
                         data-win-options="{id:'cmdSave', label:'Save Playlist', icon:'save', 
-    section:'global',tooltip:'Save Playlist'}">    
+                                    section:'global',tooltip:'Save Playlist'}">    
                     </button>
                     <button
                         id="open-playlist-button" 
