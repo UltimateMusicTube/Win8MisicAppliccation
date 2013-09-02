@@ -42,8 +42,11 @@
     var removeSelectionFromPlaylist = function () {
         var listview = document.getElementById("playlist-list").winControl;
         var indices = listview.selection.getIndices();
-        for (var j = 0; j < indices.length; j++) {
-            ViewModels.removeFromPlaylist([indices[j]]);
+        for (var i = 0; i < indices.length; i++) {
+            ViewModels.removeFromPlaylist([indices[i]]);
+            for (var j = i; j < indices.length; j++) {
+                indices[j]--;
+            }
         }
         ViewModels.loadPlaylist();
     }
