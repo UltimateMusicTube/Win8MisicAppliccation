@@ -30,7 +30,7 @@
         ready: function (element, options) {
             var submitSearchResults = (function () {
                 Data.clearSearchResultsModels();
-                var searchResultsDisplayCount = 5;
+                var searchResultsDisplayCount = Windows.Storage.ApplicationData.current.localSettings.values["search-number"];
                 var searchInput = options.queryText;
                 var searchWords = searchInput.split(" ");
                 searchWords = searchWords.filter(function (n) { return n });
@@ -40,7 +40,7 @@
                     searchUrl += searchWords[i].trim() + "+";
                 }
                 searchUrl.substring(0, searchUrl.length - 2);
-                searchUrl += "&category=music&type=video&videoSyndicated=true&videoEmbeddable=true&key=AIzaSyC9M5McfrlS7DmKaldR8Xr0DaqNUPGTh9k";
+                searchUrl += "&category=music&type=video&videoSyndicated=true&videoEmbeddable=true&maxResults=" + searchResultsDisplayCount + "&key=AIzaSyC9M5McfrlS7DmKaldR8Xr0DaqNUPGTh9k";
 
                 WinJS.xhr({
                     url: searchUrl,
@@ -49,7 +49,7 @@
                     var responseJson = JSON.parse(result.responseText);
                     var count = searchResultsDisplayCount > responseJson.items.length ? responseJson.items.length : searchResultsDisplayCount
                     if (count === 0) {
-                        var errorMsg = new Windows.UI.Popups.MessageDialog("No results match your search criteria.")
+                        var errorMsg = new Windows.UI.Popups.MessageDialog("No results match your search criteria.");
                         errorMsg.showAsync();
                     }
                     for (var i = 0; i < count; i++) {

@@ -15,7 +15,7 @@
   </Resources>
   <Applications>
     <Application Id="App" StartPage="default.html">
-      <VisualElements DisplayName="UltimateMusicTube" Logo="images\logo.png" SmallLogo="images\smalllogo.png" Description="UltimateMusicTube" ForegroundText="light" BackgroundColor="#464646">
+      <VisualElements DisplayName="UltimateMusicTube" Logo="images\logo.png" SmallLogo="images\smalllogo.png" Description="UltimateMusicTube" ForegroundText="light" BackgroundColor="#65B7B5">
         <DefaultTile ShowName="allLogos" />
         <SplashScreen Image="images\splashscreen.png" />
       </VisualElements>

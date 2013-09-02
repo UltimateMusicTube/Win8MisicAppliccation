@@ -22,20 +22,11 @@
 
             var shareImageHandler = function (event) {
                 var dataRequest = event.request;
-
-                dataRequest.data.properties.title = "Duck Enterprises Logo";
-                dataRequest.data.properties.description = "The Logo of Duck Enterprises";
-                dataRequest.data.properties.thumbnail =
-                    Windows.Storage.Streams.RandomAccessStreamReference.createFromUri(
-                        new Windows.Foundation.Uri("ms-appx:///images/duck-logo-thumbnail.bmp")
-                    );
-
-                var bitmapStream =
-                    Windows.Storage.Streams.RandomAccessStreamReference.createFromUri(
-                        new Windows.Foundation.Uri("ms-appx:///images/duck-logo.bmp")
-                    );
-
-                dataRequest.data.setBitmap(bitmapStream);
+                var currentVideo = CurrentVideo.Get();
+                dataRequest.data.properties.title = "SingTube";
+                dataRequest.data.properties.description = "I'm singing with SingTube! It's great!";
+                dataRequest.data.setUri(new Windows.Foundation.Uri(currentVideo.sourceUrl));
+                dataRequest.data.setText(currentVideo.lyrics);
             };
 
             dataTransferManager.addEventListener("datarequested", shareImageHandler);
