@@ -38,15 +38,16 @@
                     <div id="playlist-result-template" data-win-control="WinJS.Binding.Template">           
                         <img class="video-result-list-image" src="#" width="100" height="70"
                                 data-win-bind="src: thumbnailImgUrl"/>
-                        <div class="video-result-list-title-holder">
+                        <span class="video-result-list-title-holder">
                             <span class="video-result-list-title"
                                 data-win-bind="innerText: title"></span>
-                        </div>            
+                        </span>            
                     </div>
         
                     <div id="playlist-list" data-win-control="WinJS.UI.ListView"
-                        data-win-options="{
+                         data-win-options="{
                             itemDataSource: ViewModels.playlist.dataSource,
+                            layout: {type: WinJS.UI.ListLayout},
                             itemTemplate: select('#playlist-result-template'),
                             oniteminvoked: Commands.playFromPlaylist,
                             }">

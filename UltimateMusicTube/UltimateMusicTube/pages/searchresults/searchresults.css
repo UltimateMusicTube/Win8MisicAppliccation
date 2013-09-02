@@ -3,6 +3,14 @@
     margin-right: 120px;
 }
 
+.win-listview {
+    height: 630px;
+}
+
+.search-result-list-image {
+    width: 270px;
+}
+
 @media screen and (-ms-view-state: snapped) {
     .searchresults section[role=main] {
         margin-left: 20px;
