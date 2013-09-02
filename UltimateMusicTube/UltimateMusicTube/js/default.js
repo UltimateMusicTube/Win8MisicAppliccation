@@ -7,7 +7,6 @@
 
     var app = WinJS.Application;
     var activation = Windows.ApplicationModel.Activation;
-    var dataTransferManager = Windows.ApplicationModel.DataTransfer.DataTransferManager.getForCurrentView();
     var nav = WinJS.Navigation;
 
     app.addEventListener("activated", function (args) {
@@ -20,40 +19,10 @@
                 // Restore application state here.
             }
 
-            var shareImageHandler = function (event) {
-                var dataRequest = event.request;
-
-                dataRequest.data.properties.title = "Duck Enterprises Logo";
-                dataRequest.data.properties.description = "The Logo of Duck Enterprises";
-                dataRequest.data.properties.thumbnail =
-                    Windows.Storage.Streams.RandomAccessStreamReference.createFromUri(
-                        new Windows.Foundation.Uri("ms-appx:///images/duck-logo-thumbnail.bmp")
-                    );
-
-                var bitmapStream =
-                    Windows.Storage.Streams.RandomAccessStreamReference.createFromUri(
-                        new Windows.Foundation.Uri("ms-appx:///images/duck-logo.bmp")
-                    );
-
-                dataRequest.data.setBitmap(bitmapStream);
-            };
-
-            dataTransferManager.addEventListener("datarequested", shareImageHandler);
-
             if (app.sessionState.history) {
                 nav.history = app.sessionState.history;
             }
             args.setPromise(WinJS.UI.processAll().then(function () {
-                WinJS.Application.onsettings = function(e) {
-                    e.detail.applicationcommands = {
-                         "searchOptions": {
-                             title: "Search Options",
-                             href: "/pages/settings/searchOptions.html"
-                         }
-                    };
-                    WinJS.UI.SettingsFlyout.populateSettings(e);
-                };
-
                 if (nav.location) {
                     nav.history.current.initialPlaceholder = true;
                     return nav.navigate(nav.location, nav.state);
