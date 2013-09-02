@@ -6,6 +6,10 @@
         searchResultModels = [];
     }
 
+    var clearPlaylistModels = function () {
+        playlistModels = [];
+    }
+
     var getSearchResults = function () {
         return searchResultModels;
     }
@@ -32,6 +36,7 @@
         clearSearchResultsModels: clearSearchResultsModels,
         getPlaylistResults: getPlaylistResults,
         addToPlaylist: addToPlaylist,
-        removeFromPlaylist: removeFromPlaylist
+        removeFromPlaylist: removeFromPlaylist,
+        clearPlaylistModels: clearPlaylistModels
     });
 })()
