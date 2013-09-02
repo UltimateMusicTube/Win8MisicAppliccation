@@ -10,6 +10,7 @@
     <script src="//Microsoft.WinJS.1.0/js/ui.js"></script>
 
     <link href="videoPlayer.css" rel="stylesheet" />
+    <script src="../../js/currentVideo.js"></script>
     <script src="videoPlayer.js"></script>
 </head>
     <body>
@@ -43,11 +44,11 @@
                         </div>            
                     </div>
         
-                    <div data-win-control="WinJS.UI.ListView"
+                    <div id="playlist-list" data-win-control="WinJS.UI.ListView"
                         data-win-options="{
                             itemDataSource: ViewModels.playlist.dataSource,
                             itemTemplate: select('#playlist-result-template'),
-                            selectionMode: 'none'
+                            oniteminvoked: Commands.playFromPlaylist,
                             }">
                     </div>
 

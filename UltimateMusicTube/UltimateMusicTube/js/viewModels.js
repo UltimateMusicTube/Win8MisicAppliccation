@@ -42,6 +42,9 @@
         addToPlaylist: function (title, thumbnailImgUrl, sourceUrl) {
             Data.addToPlaylist(new Models.SearchResultModel(title, thumbnailImgUrl, sourceUrl));
         },
+        removeFromPlaylist: function (index){
+            Data.removeFromPlaylist(index);
+        },
         submitSearchText: changeSearchQuery,
         searchQuery: searchQuery
     });

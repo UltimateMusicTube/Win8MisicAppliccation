@@ -40,15 +40,19 @@
                     searchUrl += searchWords[i].trim() + "+";
                 }
                 searchUrl.substring(0, searchUrl.length - 2);
-                searchUrl += "&category=music&type=video&key=AIzaSyC9M5McfrlS7DmKaldR8Xr0DaqNUPGTh9k";
+                searchUrl += "&category=music&type=video&videoSyndicated=true&videoEmbeddable=true&key=AIzaSyC9M5McfrlS7DmKaldR8Xr0DaqNUPGTh9k";
 
                 WinJS.xhr({
                     url: searchUrl,
                     responseType: "json"
                 }).then(function (result) {                   
                     var responseJson = JSON.parse(result.responseText);
-
-                    for (var i = 0; i < searchResultsDisplayCount; i++) {
+                    var count = searchResultsDisplayCount > responseJson.items.length ? responseJson.items.length : searchResultsDisplayCount
+                    if (count === 0) {
+                        var errorMsg = new Windows.UI.Popups.MessageDialog("No results match your search criteria.")
+                        errorMsg.showAsync();
+                    }
+                    for (var i = 0; i < count; i++) {
                         var sourceUrl = "https://www.youtube.com/embed/";
 
                         //getting the sourceUrl of the video
@@ -65,19 +69,13 @@
                         ViewModels.addSearchResult(videoTitle, thumbnailImgUrl, sourceUrl);
                     }
                     ViewModels.loadSearchResults();                   
+                }, function (error) {
+                    var errorMsg = new Windows.UI.Popups.MessageDialog("Can't perform search in YouTube. Please check your internet connetion.")
+                    errorMsg.showAsync();
                 });
 
-                WinJS.Utilities.id("cmd-add-selected").listen("click", function () {
-                    Commands.getSelection();
-                    WinJS.Navigation.navigate("/pages/videoPlayer/videoPlayer.html", {
-                    });
-
-
-                    //for (var i = 0; i < options.addMultyVideos.length; i++) {
-                    //    ViewModels.addToPlaylist(arr[options.addMultyVideos[i]].title, arr[options.addMultyVideos[i]].thumbnailImgUrl, arr[options.addMultyVideos[i]].sourceUrl);
-                    //    ViewModels.loadPlaylist();
-                    //}
-                    //player.src = arr[options.addMultyVideos[0]].sourceUrl;
+                utils.id("cmd-add-selected").listen("click", function () {
+                    Commands.addSelection();
                 });
             }());
 

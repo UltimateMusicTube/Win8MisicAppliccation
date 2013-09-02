@@ -14,7 +14,6 @@
         searchResultModels.push(searchResultModel);
     }
 
-
     var getPlaylistResults = function () {
         return playlistModels;
     }   
@@ -23,7 +22,7 @@
         playlistModels.push(playlistModel);
     }
 
-    var deleteFromPlaylist = function (itemIndex) {
+    var removeFromPlaylist = function (itemIndex) {
         playlistModels.splice(itemIndex, 1);
     }
 
@@ -33,6 +32,6 @@
         clearSearchResultsModels: clearSearchResultsModels,
         getPlaylistResults: getPlaylistResults,
         addToPlaylist: addToPlaylist,
-        deleteFromPlaylist: deleteFromPlaylist
+        removeFromPlaylist: removeFromPlaylist
     });
 })()

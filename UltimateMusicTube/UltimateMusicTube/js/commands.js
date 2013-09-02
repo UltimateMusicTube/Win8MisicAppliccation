@@ -1,31 +1,51 @@
 ﻿(function () {
 
-    var addAndPlay = function(invokeEvent) {
+    var addAndPlay = function (invokeEvent) {
+
+        var data = Data.getSearchResults();
+        var index = invokeEvent.detail.itemIndex;
+        var title = data[index].title;
+        var thumbnail = data[index].thumbnailImgUrl;
+        var videoUrl = data[index].sourceUrl;
+        ViewModels.addToPlaylist(title, thumbnail, videoUrl);
+        ViewModels.loadPlaylist();
+
         WinJS.Navigation.navigate("/pages/videoPlayer/videoPlayer.html", {
-            indexInComputersList: invokeEvent.detail.itemIndex,
+            title: title,
+            videoUrl: videoUrl
         })
     };
 
-    var getSelection = function () {
+    var addSelection = function () {
         var listview = document.getElementById("search-results-list").winControl;
-        var selectionIndices = listview.selection.getIndices();
+        var indices = listview.selection.getIndices();
         var arr = Data.getSearchResults();
-        for (var i = 0; i < selectionIndices.length; i++) {
-            ViewModels.addToPlaylist(arr[selectionIndices[i]].title, arr[selectionIndices[i]].thumbnailImgUrl, arr[selectionIndices[i]].sourceUrl);
+        for (var i = 0; i < indices.length; i++) {
+            ViewModels.addToPlaylist(arr[indices[i]].title, arr[indices[i]].thumbnailImgUrl, arr[indices[i]].sourceUrl);
         }
-        //ViewModels.loadPlaylist();
-        //var player = document.getElementById("player");
-        //Lyrics.getSongLyrics(arr[selectionIndices[0]].title);
-        //player.src = arr[selectionIndices[0]].sourceUrl;
+        ViewModels.loadPlaylist();
+        var title = arr[indices[0]].title;
+        var videoUrl = arr[indices[0]].sourceUrl;
         WinJS.Navigation.navigate("/pages/videoPlayer/videoPlayer.html", {
+            title: title,
+            videoUrl: videoUrl
         });
     };
 
     var playFromPlaylist = function (eventInfo) {
-        var player = document.getElementById("player");
         var data = Data.getPlaylistResults();
         var url = data[eventInfo.detail.itemIndex].sourceUrl;
-        player.src = url;
+        var title = data[eventInfo.detail.itemIndex].title;
+        CurrentVideo.Set(title, url);
+    }
+
+    var removeSelectionFromPlaylist = function () {
+        var listview = document.getElementById("playlist-list").winControl;
+        var indices = listview.selection.getIndices();
+        for (var j = 0; j < indices.length; j++) {
+            ViewModels.removeFromPlaylist([indices[j]]);
+        }
+        ViewModels.loadPlaylist();
     }
 
     WinJS.Utilities.markSupportedForProcessing(addAndPlay);
@@ -33,7 +53,8 @@
 
     WinJS.Namespace.define("Commands", {
         addAndPlay: addAndPlay,
-        getSelection: getSelection,
-        playFromPlaylist: playFromPlaylist
+        addSelection: addSelection,
+        playFromPlaylist: playFromPlaylist,
+        removeSelectionFromPlaylist: removeSelectionFromPlaylist
     });
 })()
