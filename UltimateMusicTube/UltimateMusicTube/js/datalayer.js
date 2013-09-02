@@ -27,6 +27,7 @@
     }
 
     var removeFromPlaylist = function (itemIndex) {
+        
         playlistModels.splice(itemIndex, 1);
     }
 
