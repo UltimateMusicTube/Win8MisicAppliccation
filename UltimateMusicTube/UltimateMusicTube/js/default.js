@@ -13,6 +13,23 @@
     app.addEventListener("activated", function (args) {
         if (args.detail.kind === activation.ActivationKind.launch) {
             if (args.detail.previousExecutionState !== activation.ApplicationExecutionState.terminated) {
+
+                args.setPromise(WinJS.UI.processAll());
+
+                if (app.sessionState["playlist"]) {
+                    var playlist = app.sessionState["playlist"];
+                    for (var i = 0; i < playlist.length; i++) {
+                        ViewModels.addToPlaylist(playlist[i].title, playlist[i].thumbnailImgUrl, playlist[i].sourceUrl);
+                    }
+                    ViewModels.loadPlaylist();
+                    var title = playlist[0].title;
+                    var videoUrl = playlist[0].sourceUrl;
+                    WinJS.Navigation.navigate("/pages/videoPlayer/videoPlayer.html", {
+                        title: title,
+                        videoUrl: videoUrl
+                    });
+
+                }
                 // TODO: This application has been newly launched. Initialize
                 // your application here.
             } else {
@@ -61,7 +78,20 @@
         // complete an asynchronous operation before your application is 
         // suspended, call args.setPromise().
         app.sessionState.history = nav.history;
+       
     };
+    
+    Windows.UI.WebUI.WebUIApplication.addEventListener("resuming", function () {
+        var currentPlaylist = Data.getPlaylistResults();
+        app.sessionState["playlist"] = currentPlaylist;
+    });
+
+    //function saveToSessionState(playlist) {
+    //    var currentPlaylist = Data.getPlaylistResults();
+    //    app.sessionState["playlist"] = currentPlaylist;
+        
+    //}
+
 
     app.start();
 })();
