@@ -9,6 +9,7 @@
         ready: function (element, options) {
 
             CurrentVideo.Set(options.title, options.videoUrl);
+
             WinJS.Utilities.id("remove-files-button").listen("click", function () {
                 Commands.removeSelectionFromPlaylist();
             });
@@ -16,20 +17,19 @@
             WinJS.Utilities.id("open-playlist-button").listen("click", function () {
 
                 var openPicker = Windows.Storage.Pickers.FileOpenPicker();
-                var applicationData = Windows.Storage.ApplicationData.current;
-                var localFolder = applicationData.localFolder;
-                openPicker.suggestedStartLocation = localFolder;
-                openPicker.fileTypeFilter.append("*");
-                openPicker.pickSingleFileAsync().then(FileSystem.loadPlaylist);
+                openPicker.suggestedStartLocation = Windows.Storage.KnownFolders.documentsLibrary;
+                openPicker.fileTypeFilter.append(".json");
+                openPicker.pickSingleFileAsync().then(PlaylistStorage.loadPlaylist);
             });
 
             WinJS.Utilities.id("save-playlist-button").listen("click", function () {
 
                 var savePicker = new Windows.Storage.Pickers.FileSavePicker();
+                savePicker.suggestedStartLocation = Windows.Storage.KnownFolders.documentsLibrary;
                 savePicker.defaultFileExtension = ".json";
                 savePicker.fileTypeChoices.insert("playlist", [".json"]);
                 savePicker.suggestedFileName = "SingTubePlaylist";
-                FileSystem.savePlaylist(savePicker);
+                PlaylistStorage.savePlaylist(savePicker);
             });
         },
 

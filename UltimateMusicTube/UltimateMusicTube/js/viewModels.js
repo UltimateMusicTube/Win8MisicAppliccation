@@ -9,7 +9,9 @@
 
         for (var i = 0; i < playlistDTOs.length; i++) {
             playlistList.push(playlistDTOs[i]);
-        }
+        }      
+
+        PlaylistStorage.storeCurrentPlaylist();
     }
 
     var searchResultsList = new WinJS.Binding.List([]);

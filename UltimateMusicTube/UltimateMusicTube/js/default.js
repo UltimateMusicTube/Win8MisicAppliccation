@@ -12,24 +12,41 @@
 
     app.addEventListener("activated", function (args) {
         if (args.detail.kind === activation.ActivationKind.launch) {
-            if (args.detail.previousExecutionState !== activation.ApplicationExecutionState.terminated) {
-
+            if (args.detail.previousExecutionState !== activation.ApplicationExecutionState.terminated) {                
+               
                 args.setPromise(WinJS.UI.processAll());
 
-                if (app.sessionState["playlist"]) {
-                    var playlist = app.sessionState["playlist"];
-                    for (var i = 0; i < playlist.length; i++) {
-                        ViewModels.addToPlaylist(playlist[i].title, playlist[i].thumbnailImgUrl, playlist[i].sourceUrl);
-                    }
-                    ViewModels.loadPlaylist();
-                    var title = playlist[0].title;
-                    var videoUrl = playlist[0].sourceUrl;
-                    WinJS.Navigation.navigate("/pages/videoPlayer/videoPlayer.html", {
-                        title: title,
-                        videoUrl: videoUrl
-                    });
+                var applicationData = Windows.Storage.ApplicationData.current;
+                var localFolder = applicationData.localFolder;
 
-                }
+                localFolder.createFileAsync("currentPlaylist.json", Windows.Storage.CreationCollisionOption.openIfExists).then(
+                function () {
+
+                    localFolder.getFileAsync("currentPlaylist.json").then(function (sampleFile) {
+                        Windows.Storage.FileIO.readTextAsync(sampleFile).done(function (content) {
+                            if (content.length != 0) {
+
+                                var loadedPlaylistData = JSON.parse(content);
+
+                                for (var i = 0; i < loadedPlaylistData.length; i++) {
+                                    var title = loadedPlaylistData[i].title;
+                                    var thumbnailImgUrl = loadedPlaylistData[i].thumbnailImgUrl;
+                                    var sourceUrl = loadedPlaylistData[i].sourceUrl;
+                                    ViewModels.addToPlaylist(title, thumbnailImgUrl, sourceUrl);
+                                }
+                                ViewModels.loadPlaylist();
+                                var currTitle = loadedPlaylistData[0].title;
+                                var currUrl = loadedPlaylistData[0].sourceUrl;
+
+                                WinJS.Navigation.navigate("/pages/videoPlayer/videoPlayer.html", {
+                                    title: currTitle,
+                                    videoUrl: currUrl
+                                });
+                            }
+                        });
+                    }).done()
+                });
+                
                 // TODO: This application has been newly launched. Initialize
                 // your application here.
             } else {
@@ -40,10 +57,16 @@
             var shareImageHandler = function (event) {
                 var dataRequest = event.request;
                 var currentVideo = CurrentVideo.Get();
-                dataRequest.data.properties.title = "SingTube";
-                dataRequest.data.properties.description = "I'm singing with SingTube! It's great!";
-                dataRequest.data.setUri(new Windows.Foundation.Uri(currentVideo.sourceUrl));
-                dataRequest.data.setText(currentVideo.lyrics);
+                dataRequest.data.properties.title = "I'm singing with SingTube! It's great!";
+
+                if (currentVideo.sourceUrl === undefined) {
+                    var errorMsg = new Windows.UI.Popups.MessageDialog("You can't share  from this page!");
+                    errorMsg.showAsync();
+                }
+                else {
+                    dataRequest.data.properties.description = currentVideo.lyrics;
+                    dataRequest.data.setUri(new Windows.Foundation.Uri(currentVideo.sourceUrl));
+                }
             };
 
             dataTransferManager.addEventListener("datarequested", shareImageHandler);
@@ -77,21 +100,7 @@
         // that needs to persist across suspensions here. If you need to 
         // complete an asynchronous operation before your application is 
         // suspended, call args.setPromise().
-        app.sessionState.history = nav.history;
        
     };
-    
-    Windows.UI.WebUI.WebUIApplication.addEventListener("resuming", function () {
-        var currentPlaylist = Data.getPlaylistResults();
-        app.sessionState["playlist"] = currentPlaylist;
-    });
-
-    //function saveToSessionState(playlist) {
-    //    var currentPlaylist = Data.getPlaylistResults();
-    //    app.sessionState["playlist"] = currentPlaylist;
-        
-    //}
-
-
     app.start();
 })();
