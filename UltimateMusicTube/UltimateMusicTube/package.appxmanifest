@@ -21,10 +21,19 @@
       </VisualElements>
       <Extensions>
         <Extension Category="windows.search" />
+        <Extension Category="windows.fileTypeAssociation">
+          <FileTypeAssociation Name="json-file">
+            <SupportedFileTypes>
+              <FileType>.json</FileType>
+            </SupportedFileTypes>
+          </FileTypeAssociation>
+        </Extension>
       </Extensions>
     </Application>
   </Applications>
   <Capabilities>
+    <Capability Name="documentsLibrary" />
+    <Capability Name="musicLibrary" />
     <Capability Name="internetClient" />
   </Capabilities>
 </Package>

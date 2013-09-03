@@ -11,11 +11,13 @@
     var getCurrentVideo = function () {
         var player = document.getElementById("player");
         var lyricsContainer = document.getElementById("lyrics");
-        var currentVideo = {
-            "sourceUrl": player.src,
-            "lyrics": lyricsContainer.innerText
+        if (player != undefined && lyricsContainer != undefined) {
+            var currentVideo = {
+                "sourceUrl": player.src,
+                "lyrics": lyricsContainer.innerText
+            }
         }
-
+        
         return currentVideo;
     }
 

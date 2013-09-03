@@ -16,7 +16,6 @@
     WinJS.Binding.optimizeBindingReferences = true;
 
     var appModel = Windows.ApplicationModel;
-    var appViewState = Windows.UI.ViewManagement.ApplicationViewState;
     var nav = WinJS.Navigation;
     var ui = WinJS.UI;
     var utils = WinJS.Utilities;
@@ -30,7 +29,10 @@
         ready: function (element, options) {
             var submitSearchResults = (function () {
                 Data.clearSearchResultsModels();
-                var searchResultsDisplayCount = Windows.Storage.ApplicationData.current.localSettings.values["search-number"];
+                var searchResultsDisplayCount = 10;
+                if (Windows.Storage.ApplicationData.current.localSettings.values["search-number"]) {
+                    searchResultsDisplayCount = Windows.Storage.ApplicationData.current.localSettings.values["search-number"];
+                }
                 var searchInput = options.queryText;
                 var searchWords = searchInput.split(" ");
                 searchWords = searchWords.filter(function (n) { return n });

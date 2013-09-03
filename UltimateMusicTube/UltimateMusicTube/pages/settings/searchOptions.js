@@ -17,6 +17,8 @@
                 searchNumber = newNumber;
                 Windows.Storage.ApplicationData.current.roamingSettings.values["search-number"] = searchNumber;
                 Windows.Storage.ApplicationData.current.localSettings.values["search-number"] = searchNumber;
+                var displayMessage = document.getElementById("settings-msg");
+                displayMessage.setAttribute("display", "block");
             });
         }
     });
