@@ -4,7 +4,7 @@
 }
 
 .win-listview {
-    height: 630px;
+    height: 610px;
 }
 
 .search-result-list-image {
@@ -23,4 +23,13 @@
         margin-left: 100px;
         margin-right: 100px;
     }
+}
+
+header {
+     background: #2f4f4f;   
+}
+
+body {
+    padding-top: 20px;
+    background: #C8C8C8;      
 }
